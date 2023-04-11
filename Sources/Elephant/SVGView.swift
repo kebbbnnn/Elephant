@@ -31,6 +31,15 @@ public class SVGView: UIView, WKNavigationDelegate {
         
         setup()
     }
+    
+    public init(data: Data, animationOwner: AnimationOwner, style: SVGLoader.Style? = .default) {
+        let style = style ?? SVGLoader.Style(rawCSS: "")
+        let loader = SVGLoader(data: data, animationOwner: animationOwner, style: style)
+        self.loader = loader
+        super.init(frame: .zero)
+        
+        setup()
+    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

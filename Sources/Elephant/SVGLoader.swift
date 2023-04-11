@@ -20,6 +20,7 @@ public final class SVGLoader {
             return """
             * {
             animation-play-state: var(--style);
+            image-rendering: pixelated;
             }
             """
         }
@@ -111,4 +112,11 @@ public final class SVGLoader {
         self.html = HtmlBuilder().buildHtml(svg: svg, style: style)
     }
     
+    init(data: Data, animationOwner: AnimationOwner, style: Style) {
+        let svg = String(data: data, encoding: .utf8)!
+        self.animationOwner = animationOwner
+        self.svg = svg
+        self.css = style.rawCSS
+        self.html = HtmlBuilder().buildHtml(svg: svg, style: style)
+    }
 }
