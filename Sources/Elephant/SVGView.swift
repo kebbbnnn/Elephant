@@ -2,7 +2,9 @@ import UIKit
 import WebKit
 
 public class SVGView: UIView, WKNavigationDelegate {
-    private lazy var webView: WKWebView = .init(frame: self.bounds)
+    //private lazy var webView: WKWebView = .init(frame: self.bounds)
+    private var webView: WKWebView
+    
     private let loader: SVGLoader
     private lazy var executor = JavaScriptExecutor(webView: self.webView)
 
@@ -14,6 +16,9 @@ public class SVGView: UIView, WKNavigationDelegate {
                 return nil
         }
         self.loader = loader
+        
+        self.webView = WKWebViewWarmUper.shared.dequeue()
+        
         super.init(frame: .zero)
 
         setup()
@@ -27,6 +32,9 @@ public class SVGView: UIView, WKNavigationDelegate {
                 return nil
         }
         self.loader = loader
+        
+        self.webView = WKWebViewWarmUper.shared.dequeue()
+        
         super.init(frame: .zero)
         
         setup()
@@ -36,6 +44,9 @@ public class SVGView: UIView, WKNavigationDelegate {
         let style = style ?? SVGLoader.Style(rawCSS: "")
         let loader = SVGLoader(data: data, animationOwner: animationOwner, style: style)
         self.loader = loader
+        
+        self.webView = WKWebViewWarmUper.shared.dequeue()
+        
         super.init(frame: .zero)
         
         setup()
