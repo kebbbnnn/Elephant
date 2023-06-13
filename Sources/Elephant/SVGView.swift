@@ -3,12 +3,14 @@ import WebKit
 
 public class SVGView: UIView, WKNavigationDelegate {
     //private lazy var webView: WKWebView = .init(frame: self.bounds)
-    private var webView: WKWebView
+    private let webView: WKWebView
     
     private let loader: SVGLoader
     private lazy var executor = JavaScriptExecutor(webView: self.webView)
 
-    public init?(named: String, animationOwner: AnimationOwner, style: SVGLoader.Style? = .default, bundle: Bundle = .main) {
+    public init?(webView: WKWebView, named: String, animationOwner: AnimationOwner, style: SVGLoader.Style? = .default, bundle: Bundle = .main) {
+        self.webView = webView
+        
         let style = style ?? SVGLoader.Style(rawCSS: "")
         guard let loader = SVGLoader(named: named, animationOwner: animationOwner, style: style, bundle: bundle)
             else {
@@ -17,14 +19,16 @@ public class SVGView: UIView, WKNavigationDelegate {
         }
         self.loader = loader
         
-        self.webView = WKWebViewWarmUper.shared.dequeue()
+        //self.webView = WKWebViewWarmUper.shared.dequeue()
         
         super.init(frame: .zero)
 
         setup()
     }
     
-    public init?(fileURL: URL, animationOwner: AnimationOwner, style: SVGLoader.Style? = .default) {
+    public init?(webView: WKWebView, fileURL: URL, animationOwner: AnimationOwner, style: SVGLoader.Style? = .default) {
+        self.webView = webView
+        
         let style = style ?? SVGLoader.Style(rawCSS: "")
         guard let loader = SVGLoader(fileURL: fileURL, animationOwner: animationOwner, style: style)
             else {
@@ -33,19 +37,21 @@ public class SVGView: UIView, WKNavigationDelegate {
         }
         self.loader = loader
         
-        self.webView = WKWebViewWarmUper.shared.dequeue()
+        //self.webView = WKWebViewWarmUper.shared.dequeue()
         
         super.init(frame: .zero)
         
         setup()
     }
     
-    public init(data: Data, animationOwner: AnimationOwner, style: SVGLoader.Style? = .default) {
+    public init(webView: WKWebView, data: Data, animationOwner: AnimationOwner, style: SVGLoader.Style? = .default) {
+        self.webView = webView
+        
         let style = style ?? SVGLoader.Style(rawCSS: "")
         let loader = SVGLoader(data: data, animationOwner: animationOwner, style: style)
         self.loader = loader
         
-        self.webView = WKWebViewWarmUper.shared.dequeue()
+        //self.webView = WKWebViewWarmUper.shared.dequeue()
         
         super.init(frame: .zero)
         

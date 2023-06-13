@@ -35,6 +35,7 @@ public class WarmUper<Object: WarmUpable> {
     
     public func enqueue(_ cleanupBlock: () -> Object) {
         let object = cleanupBlock()
+        object.warmUp()
         self.warmedUpObjects.append(object)
     }
     
@@ -58,24 +59,9 @@ public class WarmUper<Object: WarmUpable> {
     
 }
 
-fileprivate let htmlString = """
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    body {
-      background-color: transparent;
-    }
-  </style>
-</head>
-<body>
-</body>
-</html>
-"""
-
 extension WKWebView: WarmUpable {
     public func warmUp() {
-        loadHTMLString(htmlString, baseURL: nil)
+        load(URLRequest(url: URL(string: "about:blank")!))
     }
 }
 
